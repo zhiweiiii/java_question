@@ -6,6 +6,7 @@ Component.registerHooks([
   'beforeRouteUpdate' // for vue-router 2.2+
 ]);
 import Router from 'vue-router';
+const Mindex = () => import('../mhome/mindex/mindex.vue');
 const Home = () => import('../core/home/home.vue');
 const Error = () => import('../core/error/error.vue');
 const Register = () => import('../account/register/register.vue');
@@ -24,6 +25,18 @@ const JhiLogsComponent = () => import('../admin/logs/logs.vue');
 const JhiAuditsComponent = () => import('../admin/audits/audits.vue');
 const JhiMetricsComponent = () => import('../admin/metrics/metrics.vue');
 /* tslint:disable */
+// prettier-ignore
+const Question = () => import('../entities/question/question.vue');
+// prettier-ignore
+const QuestionUpdate = () => import('../entities/question/question-update.vue');
+// prettier-ignore
+const QuestionDetails = () => import('../entities/question/question-details.vue');
+// prettier-ignore
+const Comment = () => import('../entities/comment/comment.vue');
+// prettier-ignore
+const CommentUpdate = () => import('../entities/comment/comment-update.vue');
+// prettier-ignore
+const CommentDetails = () => import('../entities/comment/comment-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 Vue.use(Router);
@@ -34,8 +47,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'mindex',
+      component: Mindex
     },
     {
       path: '/forbidden',
@@ -140,6 +153,55 @@ export default new Router({
       name: 'JhiConfigurationComponent',
       component: JhiConfigurationComponent,
       meta: { authorities: ['ROLE_ADMIN'] }
+    }
+    ,
+    {
+      path: '/entity/question',
+      name: 'Question',
+      component: Question
+    },
+    {
+      path: '/entity/question/new',
+      name: 'QuestionCreate',
+      component: QuestionUpdate,
+      meta: { authorities: ['ROLE_USER'] }
+    },
+    {
+      path: '/entity/question/:questionId/edit',
+      name: 'QuestionEdit',
+      component: QuestionUpdate,
+      meta: { authorities: ['ROLE_USER'] }
+    },
+    {
+      path: '/entity/question/:questionId/view',
+      name: 'QuestionView',
+      component: QuestionDetails,
+      meta: { authorities: ['ROLE_USER'] }
+    }
+    ,
+    {
+      path: '/entity/comment',
+      name: 'Comment',
+      component: Comment,
+      meta: { authorities: ['ROLE_USER'] }
+    },
+    {
+      path: '/entity/comment/new',
+      name: 'CommentCreate',
+      component: CommentUpdate,
+      meta: { authorities: ['ROLE_USER'] }
+    },
+    {
+      path: '/entity/comment/:commentId/edit',
+      name: 'CommentEdit',
+      component: CommentUpdate,
+      meta: { authorities: ['ROLE_USER'] }
+    },
+    {
+      path: '/entity/comment/:commentId/view',
+      name: 'CommentView',
+      component: CommentDetails,
+      meta: { authorities: ['ROLE_USER'] }
     }
     // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
   ]

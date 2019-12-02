@@ -1,0 +1,49 @@
+/**
+* 问题
+* @author Huang
+*/
+entity Question(t_question){
+	content TextBlob /* 内容 */,
+    answer TextBlob /* 答案 */,
+    createId Long /* 作者 */,
+	remark TextBlob /* 备注 */,
+	star Integer /* 点赞 */,
+    createdBy String maxlength(50),
+    createdDate Instant,
+    lastModifiedBy String maxlength(50),
+    lastModifiedDate Instant
+}
+
+/**
+* 评论
+* @author Huang
+*/
+entity Comment(t_comment){
+	content TextBlob /* 内容 */,
+	createId Long /* 评论人 */,
+    
+    createdBy String maxlength(50),
+    createdDate Instant,
+    lastModifiedBy String maxlength(50),
+    lastModifiedDate Instant
+}
+
+
+
+
+relationship OneToMany {
+	Question{comments} to Comment
+}
+
+
+        
+// Set pagination options
+paginate all with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass
+
+filter *
+

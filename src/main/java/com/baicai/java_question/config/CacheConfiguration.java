@@ -42,6 +42,9 @@ public class CacheConfiguration {
             createCache(cm, com.baicai.java_question.domain.User.class.getName());
             createCache(cm, com.baicai.java_question.domain.Authority.class.getName());
             createCache(cm, com.baicai.java_question.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.baicai.java_question.domain.Question.class.getName());
+            createCache(cm, com.baicai.java_question.domain.Question.class.getName() + ".comments");
+            createCache(cm, com.baicai.java_question.domain.Comment.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
