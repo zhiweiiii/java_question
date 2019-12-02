@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Indicator, MessageBox, Toast } from 'mint-ui';
 
 // POST 方法封装  (参数处理)
-export function mHttp(method, url, data = {}) {
+export default function mHttp(method, url, data = {}) {
   Indicator.open({
     text: '加载中...',
     spinnerType: 'fading-circle'

@@ -20,6 +20,9 @@ import UserManagementService from '@/admin/user-management/user-management.servi
 import LoginService from './account/login.service';
 import AccountService from './account/account.service';
 
+import mJS from './mJS';
+import mHttp from './mHttp';
+
 import '../content/scss/vendor.scss';
 import AlertService from '@/shared/alert/alert.service';
 import ConfigurationService from '@/admin/configuration/configuration.service';
@@ -71,10 +74,11 @@ new Vue({
   router,
   provide: {
     loginService: () => loginService,
+    mJS: () => new mJS(),
     activateService: () => new ActivateService(),
     registerService: () => new RegisterService(),
     userService: () => new UserManagementService(),
-
+    mHttp: (method, url, date) => mHttp(method, url, date),
     auditsService: () => new AuditsService(),
 
     healthService: () => new HealthService(),

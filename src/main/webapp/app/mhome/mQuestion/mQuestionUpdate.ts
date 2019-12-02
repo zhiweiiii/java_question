@@ -13,7 +13,6 @@ import { IComment } from '@/shared/model/comment.model';
 
 import AlertService from '@/shared/alert/alert.service';
 import { IQuestion, Question } from '@/shared/model/question.model';
-import QuestionService from './mQuestionUpdate';
 
 const validations: any = {
   question: {

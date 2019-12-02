@@ -7,12 +7,10 @@ import AlertService from '@/shared/alert/alert.service';
 
 import JhiDataUtils from '@/shared/data/data-utils.service';
 
-import mJS from '../mJS';
-
 @Component
 export default class Question extends mixins(JhiDataUtils, Vue2Filters.mixin) {
   @Inject('alertService') private alertService: () => AlertService;
-  @Inject('mJS') private mJS: () => mJS;
+  mJS;
   private removeId: number = null;
   public itemsPerPage = 20;
   public queryCount: number = null;
@@ -133,6 +131,6 @@ export default class Question extends mixins(JhiDataUtils, Vue2Filters.mixin) {
 
   public find(id: number): Promise<> {
     var data = null;
-    this.mJS.mHttp('get', 'api/questions', data);
+    this.mHttp('get', 'api/questions', data);
   }
 }
