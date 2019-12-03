@@ -6,7 +6,7 @@ Component.registerHooks([
   'beforeRouteUpdate' // for vue-router 2.2+
 ]);
 import Router from 'vue-router';
-const Mindex = () => import('../mhome/mindex/mindex.vue');
+const Mindex = () => import('../mhome/mQuestion/mQuestionList.vue');
 const Home = () => import('../core/home/home.vue');
 const Error = () => import('../core/error/error.vue');
 const Register = () => import('../account/register/register.vue');

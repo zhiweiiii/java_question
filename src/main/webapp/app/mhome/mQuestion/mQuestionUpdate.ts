@@ -37,11 +37,7 @@ const validations: any = {
 })
 export default class QuestionUpdate extends mixins(JhiDataUtils) {
   @Inject('alertService') private alertService: () => AlertService;
-  @Inject('questionService') private questionService: () => QuestionService;
   public question: IQuestion = new Question();
-
-  @Inject('commentService') private commentService: () => CommentService;
-
   public comments: IComment[] = [];
   public isSaving = false;
 
@@ -52,29 +48,6 @@ export default class QuestionUpdate extends mixins(JhiDataUtils) {
       }
       vm.initRelationships();
     });
-  }
-
-  public save(): void {
-    this.isSaving = true;
-    if (this.question.id) {
-      this.questionService()
-        .update(this.question)
-        .then(param => {
-          this.isSaving = false;
-          this.$router.go(-1);
-          const message = 'A Question is updated with identifier ' + param.id;
-          this.alertService().showAlert(message, 'info');
-        });
-    } else {
-      this.questionService()
-        .create(this.question)
-        .then(param => {
-          this.isSaving = false;
-          this.$router.go(-1);
-          const message = 'A Question is created with identifier ' + param.id;
-          this.alertService().showAlert(message, 'success');
-        });
-    }
   }
 
   public convertDateTimeFromServer(date: Date): string {
@@ -100,25 +73,7 @@ export default class QuestionUpdate extends mixins(JhiDataUtils) {
     }
   }
 
-  public retrieveQuestion(questionId): void {
-    this.questionService()
-      .find(questionId)
-      .then(res => {
-        res.createdDate = new Date(res.createdDate);
-        res.lastModifiedDate = new Date(res.lastModifiedDate);
-        this.question = res;
-      });
-  }
-
   public previousState(): void {
     this.$router.go(-1);
-  }
-
-  public initRelationships(): void {
-    this.commentService()
-      .retrieve()
-      .then(res => {
-        this.comments = res.data;
-      });
   }
 }

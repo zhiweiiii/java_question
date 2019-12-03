@@ -4,13 +4,13 @@ import { Component, Inject } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IQuestion } from '@/shared/model/question.model';
 import AlertService from '@/shared/alert/alert.service';
-
+import { mHttpWithPage } from '@/mHttp';
 import JhiDataUtils from '@/shared/data/data-utils.service';
 
 @Component
 export default class Question extends mixins(JhiDataUtils, Vue2Filters.mixin) {
   @Inject('alertService') private alertService: () => AlertService;
-  mJS;
+
   private removeId: number = null;
   public itemsPerPage = 20;
   public queryCount: number = null;
@@ -56,38 +56,40 @@ export default class Question extends mixins(JhiDataUtils, Vue2Filters.mixin) {
       size: this.itemsPerPage,
       sort: this.sort()
     };
-    this.questionService()
-      .retrieve(paginationQuery)
-      .then(
+    new Promise<any>(resolve => {
+      mHttpWithPage('get', 'api/question', {}, paginationQuery).then(
         res => {
+          console.log(res);
           this.questions = res.data;
           this.totalItems = Number(res.headers['x-total-count']);
           this.queryCount = this.totalItems;
           this.isFetching = false;
         },
         err => {
+          console.log(err);
           this.isFetching = false;
         }
       );
+    });
   }
 
   public prepareRemove(instance: IQuestion): void {
     this.removeId = instance.id;
   }
 
-  public removeQuestion(): void {
-    this.questionService()
-      .delete(this.removeId)
-      .then(() => {
-        const message = 'A Question is deleted with identifier ' + this.removeId;
-        this.alertService().showAlert(message, 'danger');
-        this.getAlertFromStore();
+  // public removeQuestion(): void {
+  //   this.questionService()
+  //     .delete(this.removeId)
+  //     .then(() => {
+  //       const message = 'A Question is deleted with identifier ' + this.removeId;
+  //       this.alertService().showAlert(message, 'danger');
+  //       this.getAlertFromStore();
 
-        this.removeId = null;
-        this.retrieveAllQuestions();
-        this.closeDialog();
-      });
-  }
+  //       this.removeId = null;
+  //       this.retrieveAllQuestions();
+  //       this.closeDialog();
+  //     });
+  // }
 
   public sort(): Array<any> {
     const result = [this.propOrder + ',' + (this.reverse ? 'asc' : 'desc')];
@@ -127,10 +129,5 @@ export default class Question extends mixins(JhiDataUtils, Vue2Filters.mixin) {
 									<p><code>java</code></p>`,
       defaultData: 'preview'
     };
-  }
-
-  public find(id: number): Promise<> {
-    var data = null;
-    this.mHttp('get', 'api/questions', data);
   }
 }

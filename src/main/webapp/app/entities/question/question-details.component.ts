@@ -9,6 +9,7 @@ import QuestionService from './question.service';
 @Component
 export default class QuestionDetails extends mixins(JhiDataUtils) {
   @Inject('questionService') private questionService: () => QuestionService;
+
   public question: IQuestion = {};
 
   beforeRouteEnter(to, from, next) {
